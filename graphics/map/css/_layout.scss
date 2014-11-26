@@ -1,8 +1,176 @@
+.header .main-hed .legend {
+	display: none;
+}
+
 .igraphic-graphic.map {
-	
+
 	.hed,
 	.subhed {
 		display: none;
 	}
+
+	.content {
+
+		.map {
+			height: 0;
+			padding-bottom: 61.80%;
+			border: 1px solid #ddd;
+		}
+
+		.touch & .map {
+			width: 100%;
+			height: 100%;
+			padding-bottom: 0;
+			border: none;
+		}
+	}
+
+	.leaflet-container {
+	    background: #FFF;
+	}
+
+	.leaflet-overlay-pane {
+		z-index: 1;
+	}
+
+	.leaflet-bar {
+		box-shadow: 0 0 1px rgba(0, 0, 0, 0.65);
+		border-radius: 1px;
+	}
+
+	.legend {
+		font-family: $sansSerif;
+		background-color: white;
+		padding-left: 0.75em;
+		padding-right: 0.75em;
+		@include padding-leader(1/3);
+		@include padding-trailer(1/3);
+
+		p {
+			@include rhythm(0, 0, 0, 1/4);
+
+			span {
+				font-weight: bold;				
+			}
+		}
+
+		ul {
+			width: 100%;
+			overflow: hidden;
+
+			li {
+				float: left;
+				width: 10%;
+			}
+
+			&.colors li {
+				height: 0.55em;
+			}
+
+			&.numbers li {
+
+				text-align: center;
+				position: relative;
+
+				&:nth-child(1) {
+					text-align: left;
+					span {
+						left: 0;
+					}
+				}
+
+				span {
+					@include adjust-font-size-to(13px);
+					position: relative;
+					left: -50%;
+				}
+
+			}
+
+			&.numbers .units {
+				display: none;
+			}
+
+	// .legend .numbers li {
+	// 	text-align: center;
+	// 	position: relative;
+	// }
+
+	// .legend .numbers li span {
+	// 	font-size: 0.8em;
+	// 	position: relative;
+	// 	left: -50%;
+	// }
+
+	// .legend .numbers li:nth-child(1) {
+	// 	text-align: left;
+	// }
+
+	// .legend .numbers li:nth-child(1) span {
+	// 	left: 0;
+	// }
+
+
+
+
+
+		}
+	}
+
+	// .touch .legend {
+	// 	padding: 0;
+	// }
+
+	// .legend p {
+	// 	margin-bottom: 0.25em;
+	// }
+
+	// .legend p span {
+	// 	font-weight: bold;
+	// }
+
+	// .touch .legend p span {
+	// 	font-weight: normal;
+	// }
+
+	// .legend ul {
+	// 	width: 100%;
+	// 	overflow: hidden;
+	// }
+
+	// .legend li {
+	// 	float: left;
+	// 	width: 10%;
+	// }
+
+	// .legend .colors li {
+	// 	height: 0.55em;
+	// }
+
+	// .legend .numbers li {
+	// 	text-align: center;
+	// 	position: relative;
+	// }
+
+	// .legend .numbers li span {
+	// 	font-size: 0.8em;
+	// 	position: relative;
+	// 	left: -50%;
+	// }
+
+	// .legend .numbers li:nth-child(1) {
+	// 	text-align: left;
+	// }
+
+	// .legend .numbers li:nth-child(1) span {
+	// 	left: 0;
+	// }
+
+	// .legend .numbers .units {
+	// 	display: none;
+	// }
+
+
+
 	
 }
