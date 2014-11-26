@@ -1,5 +1,29 @@
-.header .main-hed .legend {
-	display: none;
+%updated {
+	font-family: $sansSerif;
+	@include adjust-font-size-to(8px);
+	@include rhythm(0, 0, 0, 0);
+	color: rgba(102, 102, 102, 1);
+}
+
+.header {
+
+	.main-hed {
+
+		@include rhythm(0, 0, 0, 0);
+
+		.legend {
+			display: none;
+		}
+	}
+
+	.subhed {
+
+		@include rhythm(0, 0, 0, 0);
+
+		p.updated-timestamp {
+			@extend %updated;
+		}
+	}
 }
 
 .igraphic-graphic.map {
@@ -16,6 +40,14 @@
 
 		.touch & h1 {
 			padding: 0;
+		}
+	}
+
+	.mobile-drawer {
+		p.updated-timestamp {
+			@extend %updated;
+			text-align: left;
+			@include adjust-font-size-to(14px);
 		}
 	}
 
@@ -148,8 +180,6 @@
 					display: inline;
 				}
 			}
-
 		}
 	}
-
 }

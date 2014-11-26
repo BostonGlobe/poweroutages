@@ -10,7 +10,8 @@
 
 	var subhed = $('.subhed', master);
 	if (subhed.length) {
-		$('.header .subhed').html(subhed.html());
+
+		$('.header').append('<div class="subhed">' + subhed.html() + '</div>');
 	}
 
 	$('.header').addClass('visible');

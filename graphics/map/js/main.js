@@ -1,5 +1,6 @@
 // Require libraries.
 var Leaflet = require('leaflet');
+var APDateTime = require('../../../common/js/APDateTime.js');
 
 // Convenience variables.
 var master = $('.igraphic-graphic.map');
@@ -44,3 +45,12 @@ var MyControl = L.Control.extend({
 if (!Modernizr.touch) {
 	map.addControl(new MyControl());
 }
+
+// Get the time right now.
+var date = new Date();
+
+// Construct a new date with no minutes or seconds.
+var hourDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours());
+
+// Populate the 'updated' element.
+$('.updated-timestamp').html('Updated ' + [APDateTime.time(hourDate), APDateTime.date(hourDate)].join(', '));
