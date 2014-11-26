@@ -3,22 +3,20 @@ var GlobeMobileHeader = function(options) {
 	var master = $('.igraphic-graphic');
 
 	var template = "" +
-		"<div class='mobile-header expanded'>" +
+		"<div class='mobile-header'>" +
 			"<a class='logo' href='http://bostonglobe.com'></a>" +
 			"<h1>" + $('.main-hed').html() + "</h1>" +
-			"<div class='navicon minus'>" +
+			"<div class='navicon'>" +
 			"	<span></span>" +
 			"</div>" +
 		"</div>" +
-		"<div class='mobile-drawer expanded'></div>" +
+		"<div class='mobile-drawer'></div>" +
 		"<div class='mobile-body'></div>";
 
 	master.prepend(template);
 
 	options.drawerElements.appendTo('.mobile-drawer', master);
 	options.bodyElements.appendTo('.mobile-body', master);
-
-	master.attr('data-drawer', 'expanded');
 
 	function collapseDrawer() {
 
