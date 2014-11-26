@@ -7,7 +7,10 @@ var master = $('.igraphic-graphic.map');
 var $map = $('.content .map', master);
 
 // Create the Leaflet map.
-var map = L.map($map.get(0), {attributionControl: false}).setView([42.25841962, -71.81532837], 6);
+var map = L.map($map.get(0), {
+	attributionControl: false,
+	scrollWheelZoom: false
+}).setView([42.25841962, -71.81532837], 6);
 
 // Add the MapBox baselayer to our map.
 L.tileLayer('http://{s}.tiles.mapbox.com/v3/gabriel-florit.baselayer_land/{z}/{x}/{y}.png', {
