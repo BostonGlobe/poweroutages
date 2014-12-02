@@ -7,4 +7,7 @@ index.html
 globeproject.sublime-workspace
 data/snowfall-totals.html
 data/snowfall-totals_files
+data/input
+data/output
 parts/globe
+baselayer.tm2/fonts

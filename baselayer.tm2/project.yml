@@ -1,0 +1,39 @@
+_prefs: 
+  mapid: gabriel-florit.207de5da
+  saveCenter: true
+_properties: 
+  bridge: 
+    "group-by": layer
+attribution: "<a href='https://www.mapbox.com/about/maps/' target='_blank'>&copy; Mapbox &copy; OpenStreetMap</a> <a class='mapbox-improve-map' href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a>"
+bounds: 
+  - -180
+  - -85.0511
+  - 180
+  - 85.0511
+center: 
+  - -71.0127
+  - 42.3909
+  - 13
+description: A baselayer that shows ocean, but no inland water features.
+format: "png8:m=h"
+interactivity_layer: ''
+layers: 
+  - water
+  - admin
+  - TOWNS.comp
+  - TOWNS.polygons
+  - country_label
+  - country_label_line
+  - state_label
+  - marine_label
+  - water_label
+  - place_label
+maxzoom: 13
+minzoom: 7
+name: MA-baselayer
+source: "mapbox:///mapbox.mapbox-streets-v5,gabriel-florit.284f070c"
+styles: 
+  - style.mss
+  - labels.mss
+  - towns.mss
+template: ''
