@@ -12,3 +12,19 @@ R_deploy:
 css:
 
 	cp node_modules/leaflet/dist/leaflet.css graphics/map/css/_leaflet.scss
+
+download:
+	cd data; \
+		rm -rf input; \
+		mkdir input; \
+		cd input; \
+		curl http://wsgw.mass.gov/data/gispub/shape/state/towns.zip > towns.zip; \
+		unzip towns.zip;
+
+reproject:
+	cd data; \
+		rm -rf output; \
+		mkdir output; \
+		cd output; \
+		ogr2ogr -select TOWN -s_srs EPSG:26986 -t_srs EPSG:4326 TOWNS.shp ../input/TOWNS_POLYM.shp; \
+		topojson -o TOWNS.json --simplify-proportion 0.1 TOWNS.shp;
