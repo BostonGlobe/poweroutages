@@ -6,8 +6,8 @@ Please note: do not reproduce Boston Globe logos or fonts without written permis
 
 ## TODO
 
-- make legend
 - write popup
+- use good start location
 
 ## Install
 

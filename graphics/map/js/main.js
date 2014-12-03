@@ -92,3 +92,69 @@ var topLayer = L.tileLayer('http://{s}.tiles.mapbox.com/v3/gabriel-florit.207de5
 }).addTo(map);
 topPane.appendChild(topLayer.getContainer());
 topLayer.setZIndex(7);
+
+// Create a Leaflet control for the legend.
+var MyControl = L.Control.extend({
+
+	options: {
+		position: 'topright'
+	},
+
+	onAdd: function (map) {
+
+		var container = L.DomUtil.create('div', 'legend leaflet-bar');
+
+		// Insert the legend contents.
+		container.innerHTML = $('.legend', master).html();
+
+		return container;
+	}
+});
+
+// Only add the control if we're not on touch screens.
+if (!Modernizr.touch) {
+	map.addControl(new MyControl());
+}
+
+// // Get the time right now.
+// var date = new Date();
+
+// // Construct a new date with no minutes or seconds.
+// var hourDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours());
+
+// // Populate the 'updated' element.
+// $('.updated-timestamp').html('Updated ' + [APDateTime.time(hourDate), APDateTime.date(hourDate)].join(', '));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
