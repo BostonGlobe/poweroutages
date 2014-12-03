@@ -8,6 +8,7 @@ Please note: do not reproduce Boston Globe logos or fonts without written permis
 
 - write popup
 - use good start location
+- add time data to outages
 
 ## Install
 
