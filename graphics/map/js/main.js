@@ -11,7 +11,7 @@ var $map = $('.content .map', master);
 var map = L.map($map.get(0), {
 	attributionControl: false,
 	scrollWheelZoom: false
-}).setView([42.25841962, -71.81532837], 7);
+}).setView([42.30841962, -71.05532837], 12);
 
 // Convert towns topojson back to geojson.
 var townsTopojson = require('../../../data/output/TOWNS.json');
@@ -29,7 +29,7 @@ function style(feature) {
 		color: '#000',
 		opacity: 1,
 		fillOpacity: 1,
-		fillColor: colors[getRandomInt(0, colors.length)]
+		fillColor: colors[getRandomInt(1, colors.length)]
 	};
 }
 

@@ -4,6 +4,13 @@ This project was generated with [generator-globeproject](https://github.com/Bost
 
 Please note: do not reproduce Boston Globe logos or fonts without written permission.
 
+## TODO
+
+- improve geojson (too jagged at the moment)
+- fix inconsistencies in scraper town names
+- choose scale and make legend
+- write popup
+
 ## Install
 
 - `npm install`
