@@ -6,8 +6,6 @@ Please note: do not reproduce Boston Globe logos or fonts without written permis
 
 ## TODO
 
-- make baselayer more white
-
 ## Install
 
 - `npm install`

@@ -16,23 +16,54 @@ var map = L.map($map.get(0), {
 
 // Get outages data.
 var data = require('../../../../outages_scraper/outages.json');
-var outages = data.towns;
+var towns = data.towns;
 var dates = data.dates;
 
 // Convert towns topojson to geojson.
 var townsTopojson = require('../../../data/output/TOWNS.json');
-var towns = topojson.feature(townsTopojson, townsTopojson.objects.TOWNS);
+var townsGeojson = topojson.feature(townsTopojson, townsTopojson.objects.TOWNS);
 
 // Bind outages data to towns.
-outages.forEach(function(outage) {
+towns.forEach(function(town) {
 
-	var match = _.find(towns.features, function(town) {
-		return town.properties.TOWN === outage.town;
+	var match = _.find(townsGeojson.features, function(feature) {
+		return feature.properties.TOWN === town.town;
 	});
 
-	match.properties.out = outage.out;
-	match.properties.total = outage.total;
+	// Calculate total customers.
+	var total = _.chain(town.companies)
+		.pluck('Total Cust.')
+		.reduce(function(a, b) {
+			return a + b;
+		})
+		.value();
+
+	var out = _.chain(town.companies)
+		.pluck('Cust. Out')
+		.reduce(function(a, b) {
+			return a + b;
+		})
+		.value();
+
+	match.properties.out = out;
+	match.properties.total = total;
+	match.properties.companies = town.companies;
 });
+
+var OUT = _.chain(townsGeojson.features)
+	.map(function(feature) {
+		return feature.properties.out;
+	})
+	.filter(function(out) {
+		return out;
+	})
+	.reduce(function(a, b) {
+		return a + b;
+	})
+	.value();
+
+// Populate the 'totals' element.
+$('.subhed .totals span').html(numberWithCommas(OUT));
 
 // Construct the chroma color interpolator using bezier curves.
 var interpolator = chroma.interpolate.bezier(['#FFFFFF', '#6e1315']);
@@ -63,8 +94,14 @@ var popup;
 
 function getPopupContent(feature) {
 	var town = feature.properties.TOWN.toLowerCase();
-	var outages = numberWithCommas(feature.properties.out || 0);
-	return '<p class="town">' + town + '</p><p class="outages">Outages: ' + outages + '</p>';
+
+	var outages = _.chain(feature.properties.companies)
+		.map(function(company) {
+			return '<p class="outages">' + company.Company + ': ' + numberWithCommas(company['Cust. Out']) + ' outages</p>';
+		})
+		.value().join('');
+
+	return '<p class="town">' + town + '</p>' + (outages || '<p class="none">No outages reported</p>');
 }
 
 function numberWithCommas(x) {
@@ -125,7 +162,7 @@ function resetHighlight(e) {
 }
 
 // Add towns color layer to map.
-var geojson = L.geoJson(towns, {
+var geojson = L.geoJson(townsGeojson, {
 	style: style,
 	onEachFeature: function(feature, layer) {
 		layer.on({
