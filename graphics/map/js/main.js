@@ -15,7 +15,9 @@ var map = L.map($map.get(0), {
 }).setView([42.25847871, -71.81544179], 8);
 
 // Get outages data.
-var outages = require('../../../../outages_scraper/outages.json');
+var data = require('../../../../outages_scraper/outages.json');
+var outages = data.towns;
+var dates = data.dates;
 
 // Convert towns topojson to geojson.
 var townsTopojson = require('../../../data/output/TOWNS.json');
@@ -166,45 +168,16 @@ if (!Modernizr.touch) {
 	map.addControl(new MyControl());
 }
 
-// // Get the time right now.
-// var date = new Date();
+// Construct a new date with no minutes or seconds.
+var date = new Date(_.chain(dates)
+	.pluck('date')
+	.sortBy(function(date) {
+		return date;
+	})
+	.first()
+	.value());
 
-// // Construct a new date with no minutes or seconds.
-// var hourDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours());
+var hourDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
 
-// // Populate the 'updated' element.
-// $('.updated-timestamp').html('Updated ' + [APDateTime.time(hourDate), APDateTime.date(hourDate)].join(', '));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Populate the 'updated' element.
+$('.updated-timestamp').html('Updated ' + [APDateTime.time(hourDate), APDateTime.date(hourDate)].join(', '));
