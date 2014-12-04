@@ -6,9 +6,9 @@ Please note: do not reproduce Boston Globe logos or fonts without written permis
 
 ## TODO
 
-- write popup
 - use good start location
 - add time data to outages
+- make baselayer more white
 
 ## Install
 

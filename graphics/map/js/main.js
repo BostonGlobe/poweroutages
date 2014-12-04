@@ -32,7 +32,10 @@ outages.forEach(function(outage) {
 	match.properties.total = outage.total;
 });
 
+// Construct the chroma color interpolator using bezier curves.
 var interpolator = chroma.interpolate.bezier(['#FFFFFF', '#6e1315']);
+
+// Also correct lightness. See https://github.com/gka/chroma.js for more information.
 var scale = chroma.scale(interpolator).correctLightness(true);
 
 // Return default style based on feature properties.
@@ -54,17 +57,64 @@ function style(feature) {
 	};
 }
 
+var popup;
+
+function getPopupContent(feature) {
+	var town = feature.properties.TOWN.toLowerCase();
+	var outages = numberWithCommas(feature.properties.out || 0);
+	return '<p class="town">' + town + '</p><p class="outages">Outages: ' + outages + '</p>';
+}
+
+function numberWithCommas(x) {
+	var parts = x.toString().split(".");
+	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return parts.join(".");
+}
+
 // Return highlight style.
 function highlightFeature(e) {
 
+	// Reset all features.
+	geojson.eachLayer(function(layer) {
+		if (layer.feature.properties.selected) {
+			geojson.resetStyle(layer);
+			layer.feature.properties.selected = false;
+		}
+	});
+
 	var layer = e.target;
+
+	var content = getPopupContent(layer.feature);
+
+	if (popup) {
+		popup
+			.setLatLng(e.latlng)
+			.setContent(content);
+	} else {
+		popup = L.popup({
+				autoPan: false,
+				closeButton: false,
+				closeOnClick: false,
+				offset: L.point(0, -20)
+			})
+			.setLatLng(e.latlng)
+			.setContent(content)
+			.openOn(map);
+	}
+
+	var defaultStyle = style(layer.feature);
+
+	var fill = chroma(defaultStyle.fillColor).darken(50).hex();
+
 	layer.setStyle({
-		weight: 2
+		fillColor: fill
 	});
 
 	if (!L.Browser.ie && !L.Browser.opera) {
 		layer.bringToFront();
 	}
+
+	layer.feature.properties.selected = true;
 }
 
 // Reset style back to default.
@@ -77,8 +127,7 @@ var geojson = L.geoJson(towns, {
 	style: style,
 	onEachFeature: function(feature, layer) {
 		layer.on({
-			mouseover: highlightFeature,
-			mouseout: resetHighlight
+			mouseover: highlightFeature
 		});
 	}
 }).addTo(map);
@@ -91,7 +140,8 @@ var topLayer = L.tileLayer('http://{s}.tiles.mapbox.com/v3/gabriel-florit.207de5
 	maxZoom: 13
 }).addTo(map);
 topPane.appendChild(topLayer.getContainer());
-topLayer.setZIndex(7);
+topLayer.setZIndex(6);
+
 
 // Create a Leaflet control for the legend.
 var MyControl = L.Control.extend({
