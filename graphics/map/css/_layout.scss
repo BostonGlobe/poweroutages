@@ -74,9 +74,7 @@
 		pointer-events: none;
 
 		.leaflet-popup-content-wrapper {
-		box-shadow: 0 0 1px rgba(0, 0, 0, 0.65);
-		border-radius: 1px;
-
+			box-shadow: 0 0 1px rgba(0, 0, 0, 0.65);
 			border-radius: 0;
 
 			.leaflet-popup-content {
@@ -107,7 +105,7 @@
 		pointer-events: none;
     }
 
-   .leaflet-popup-tip-container {
+	.leaflet-popup-tip-container {
 		display: none;
 	}
 
