@@ -166,7 +166,8 @@ var geojson = L.geoJson(townsGeojson, {
 	style: style,
 	onEachFeature: function(feature, layer) {
 		layer.on({
-			mouseover: highlightFeature
+			mouseover: highlightFeature,
+			click: highlightFeature
 		});
 	}
 }).addTo(map);
