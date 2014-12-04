@@ -12,7 +12,7 @@ var $map = $('.content .map', master);
 var map = L.map($map.get(0), {
 	attributionControl: false,
 	scrollWheelZoom: false
-}).setView([42.30841962, -71.05532837], 8);
+}).setView([42.25847871, -71.81544179], 8);
 
 // Get outages data.
 var outages = require('../../../../outages_scraper/outages.json');
