@@ -13,17 +13,15 @@ maintain or invert existing value (light to dark) scale.
 
 // Color palette //
 @road:  #fff;
-@land:  #eee;
-//@land:  white;
-//@land: blue;
-
+@land: #FFF;
+  
 @fill1: #fff;
 @fill2: #bbb;
 @fill3: #777;
 @fill4: #000;
 
-//@text: #777;
-@text: black;
+@text: #464646;
+
 
 Map {
   font-directory: url('fonts');
@@ -54,7 +52,7 @@ Map {
 // Water Features //
 #water {
   ::shadow {
-    polygon-fill: mix(@land,@fill4,75);
+    polygon-fill: mix(@land,@fill4,80);
   }
   ::fill {
     // a fill and overlay comp-op lighten the polygon-
@@ -63,7 +61,7 @@ Map {
     comp-op: soft-light;
     // blurring reveals the polygon fill from ::shadow around
     // the edges of the water
-    image-filters: agg-stack-blur(10,10);
+    image-filters: agg-stack-blur(5,5);
   }
 }
 
