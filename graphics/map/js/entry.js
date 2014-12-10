@@ -1,5 +1,7 @@
 (function() { globe.onDefine('window.jQuery && $(".igraphic-graphic.map").length', function() {
 
+	require('./templates/templates.js');
+
 	var masterSelector = '.igraphic-graphic.map';
 	var master = $(masterSelector);
 
@@ -24,7 +26,6 @@
 			drawerElements: $('.igraphic-graphic.map .source-and-credit, .header .subhed')
 		});
 	}
-
 
 	require('./main.js');
 

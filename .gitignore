@@ -11,3 +11,4 @@ data/input
 data/output
 parts/globe
 baselayer.tm2/fonts
+graphics/map/js/templates/templates.js

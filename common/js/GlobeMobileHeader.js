@@ -2,16 +2,9 @@ var GlobeMobileHeader = function(options) {
 
 	var master = $('.igraphic-graphic');
 
-	var template = "" +
-		"<div class='mobile-header'>" +
-			"<a class='logo' href='http://bostonglobe.com'></a>" +
-			"<h1>" + $('.main-hed').html() + "</h1>" +
-			"<div class='navicon'>" +
-			"	<span></span>" +
-			"</div>" +
-		"</div>" +
-		"<div class='mobile-drawer'></div>" +
-		"<div class='mobile-body'></div>";
+	var template = _.templates.mobile({
+		hed: $('.main-hed').html()
+	});
 
 	master.prepend(template);
 

@@ -1,9 +1,9 @@
-<div class="mobile-header expanded">
+<div class="mobile-header">
 	<a class="logo" href="http://bostonglobe.com"></a>
-	<h1>{{hed}}</h1>
-	<div class="navicon minus">
+	<h1><%= hed %></h1>
+	<div class="navicon">
 		<span></span>
 	</div>
 </div>
-<div class='mobile-drawer expanded'></div>
+<div class='mobile-drawer'></div>
 <div class='mobile-body'></div>
