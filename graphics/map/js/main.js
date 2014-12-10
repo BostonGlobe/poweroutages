@@ -15,7 +15,7 @@ var map = L.map($map.get(0), {
 }).setView([42.25847871, -71.81544179], 8);
 
 // Construct the chroma color interpolator using bezier curves.
-var interpolator = chroma.interpolate.bezier(['#FFFFFF', '#6e1315']);
+var interpolator = chroma.interpolate.bezier(['#f1e4e1', '#6e1315']);
 
 // Also correct lightness. See https://github.com/gka/chroma.js for more information.
 var scale = chroma.scale(interpolator).correctLightness(true);
@@ -30,7 +30,7 @@ function style(feature) {
 
 	var pct = (out && out > 0) ? out/total : 0;
 
-	var color = scale(pct).hex();
+	var color = out > 0 ? scale(pct).hex() : '#FFF';
 
 	return {
 		weight: 0.05,
