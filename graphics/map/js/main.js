@@ -42,11 +42,19 @@ function style(feature) {
 }
 
 function getPopupContent(feature) {
+
 	var town = feature.properties.TOWN.toLowerCase();
 
 	var outages = _.chain(feature.properties.companies)
 		.map(function(company) {
-			return '<p class="outages">' + company.Company + ': ' + numberWithCommas(company['Cust. Out']) + ' outages</p>';
+
+			var companyOutages = company['Cust. Out'];
+			var companyCustomers = company['Total Cust.'];
+			var pct = Math.floor(100*companyOutages/companyCustomers);
+
+			var label = companyOutages > 1 ? 'outages' : 'outage';
+
+			return '<p class="outages">' + company.Company + ': ' + numberWithCommas(company['Cust. Out']) + ' ' + label + ' (' + pct + '%)</p>';
 		})
 		.value().join('');
 
