@@ -20,7 +20,7 @@
 
 		@include rhythm(1/3, 0, 0, 1/3);
 
-		> p {
+		> p, ul li {
 			@extend %updated;
 		}
 	}
@@ -43,7 +43,7 @@
 		}
 	}
 
-	.mobile-drawer .subhed p {
+	.mobile-drawer .subhed p, ul li {
 		@extend %updated;
 		text-align: left;
 		@include adjust-font-size-to(14px);

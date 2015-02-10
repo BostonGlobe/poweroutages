@@ -4,6 +4,22 @@ var topojson   = require('topojson');
 var APDateTime = require('../../../common/js/APDateTime.js');
 var chroma     = require('chroma-js');
 
+// 8:14 p.m., Feb. 9, 2015
+function shortenedDateTime(date) {
+
+	var display = APDateTime.time(date);
+	var now = new Date(Date.now());
+	var daysDelta = now.getDate() - date.getDate();
+
+	// if date is today, only display time
+	if (daysDelta > 0) {
+		// but remove the year
+		display += [', ', APDateTime.date(date).split(', ')[0]].join('');
+	}
+
+	return display;
+}
+
 // Convenience variables.
 var master = $('.igraphic-graphic.map');
 var $map = $('.content .map', master);
@@ -180,20 +196,55 @@ window.outages = function(data) {
 		match.properties.companies = town.companies;
 	});
 
-	var OUT = _.chain(townsGeojson.features)
-		.map(function(feature) {
-			return feature.properties.out;
-		})
-		.filter(function(out) {
-			return out;
-		})
+	var statewideTotals = _.chain(towns)
+		.pluck('companies')
+		.flatten()
+		.pluck('Cust. Out')
 		.reduce(function(a, b) {
 			return a + b;
 		})
 		.value();
 
+	var outagesByCompany = _.chain(towns)
+		.pluck('companies')
+		.flatten()
+		.groupBy('Company')
+		.map(function(outages, company) {
+
+			var totals = _.chain(outages)
+				.pluck('Cust. Out')
+				.reduce(function(a, b) {
+					return a + b;
+				})
+				.value();
+
+			return {
+				company: company,
+				outages: totals
+			};
+		})
+		.value();
+
+	var companiesHtml = _.chain(dates)
+		.map(function(v) {
+			var outages = _.find(outagesByCompany, {company: v.company});
+			v.outages = outages ? outages.outages : 0;
+			return v;
+		})
+		.sortBy('company')
+		.map(function(v) {
+
+			var date = new Date(v.date);
+			var displayDate = shortenedDateTime(date);
+			var label = v.outages === 1 ? 'outage' : 'outages';
+
+			return '<li>' + v.company + ': ' + numberWithCommas(v.outages) + ' ' + label + ' as of ' + displayDate + '</li>';
+		})
+		.value().join('');
+
 	// Populate the 'totals' element.
-	$('.subhed .totals span').html(numberWithCommas(OUT));
+	$('.subhed .totals span').html(numberWithCommas(statewideTotals));
+	$('.subhed ul').html(companiesHtml);
 
 	var popup;
 
@@ -217,21 +268,6 @@ window.outages = function(data) {
 	}).addTo(map);
 	topPane.appendChild(topLayer.getContainer());
 	topLayer.setZIndex(6);
-
-	// Construct a new date with no minutes or seconds.
-	var date = new Date(_.chain(dates)
-		.pluck('date')
-		.sortBy(function(date) {
-			return date;
-		})
-		.first()
-		.value());
-
-	var hourDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes());
-
-	// Populate the 'updated' element.
-	$('.updated-timestamp').html('Updated ' + [APDateTime.time(hourDate), APDateTime.date(hourDate)].join(', '));
-
 };
 
 $.ajax({
