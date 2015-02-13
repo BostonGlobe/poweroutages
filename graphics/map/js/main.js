@@ -83,7 +83,8 @@ function getPopupContent(feature) {
 
 			var companyOutages = company['Cust. Out'];
 			var companyCustomers = company['Total Cust.'];
-			var pct = Math.floor(100*companyOutages/companyCustomers);
+			var pctNumber = 100*companyOutages/companyCustomers;
+			var pct = pctNumber < 1 ? pctNumber.toFixed(1) : Math.floor(pctNumber);
 
 			var label = companyOutages > 1 ? 'outages' : 'outage';
 
