@@ -6,6 +6,10 @@ This project was generated with [generator-globeproject](https://github.com/Bost
 
 Please note: do not reproduce Boston Globe logos or fonts without written permission.
 
+## Location
+ 
+- /Boston/Content/Metro/WebGraphics/2014/12/poweroutages/poweroutages.jpt
+
 ## Install
 
 - `npm install`
