@@ -193,15 +193,20 @@ window.outages = function(data) {
 			return feature.properties.TOWN === town.town;
 		});
 
+		// Only include companies with outages
+		var companies = _.chain(town.companies)
+			.filter('Cust. Out')
+			.value();
+
 		// Calculate total customers.
-		var total = _.chain(town.companies)
+		var total = _.chain(companies)
 			.pluck('Total Cust.')
 			.reduce(function(a, b) {
 				return a + b;
 			})
 			.value();
 
-		var out = _.chain(town.companies)
+		var out = _.chain(companies)
 			.pluck('Cust. Out')
 			.reduce(function(a, b) {
 				return a + b;
@@ -210,7 +215,7 @@ window.outages = function(data) {
 
 		match.properties.out = out;
 		match.properties.total = total;
-		match.properties.companies = town.companies;
+		match.properties.companies = companies;
 	});
 
 	var statewideTotals = _.chain(towns)
