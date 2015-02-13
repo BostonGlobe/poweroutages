@@ -243,12 +243,12 @@ window.outages = function(data) {
 			var displayDate = shortenedDateTime(date);
 			var label = tickAndCompany.outages === 1 ? 'outage' : 'outages';
 
-			return '<li>' + tickAndCompany.company + ': ' + numberWithCommas(tickAndCompany.outages) + ' ' + label + ' as of ' + displayDate + '</li>';
+			return '<li><span class="util-name">' + tickAndCompany.company + '</span><span class="util-outageinfo">' + numberWithCommas(tickAndCompany.outages) + ' ' + label + ' as of ' + displayDate + '</span></li>';
 		})
 		.value().join('');
 
 	// Populate the 'totals' element.
-	$('.subhed .totals span').html(numberWithCommas(statewideTotals));
+	$('.subhed .totals .totals-outage-no').html(numberWithCommas(statewideTotals));
 	$('.subhed ul').html(companiesHtml);
 
 	var popup;
