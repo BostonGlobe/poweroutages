@@ -4,6 +4,10 @@ var topojson   = require('topojson');
 var APDateTime = require('../../../common/js/APDateTime.js');
 var chroma     = require('chroma-js');
 
+function log(s) {
+	console.log(JSON.stringify(s, null, 4));
+}
+
 // 8:14 p.m., Feb. 9, 2015
 function shortenedDateTime(date) {
 
@@ -163,7 +167,6 @@ if (!Modernizr.touch) {
 window.outages = function(data) {
 
 	var towns = data.towns;
-	var dates = data.dates;
 
 	// Convert towns topojson to geojson.
 	var townsTopojson = require('../../../data/output/TOWNS.json');
@@ -225,20 +228,22 @@ window.outages = function(data) {
 		})
 		.value();
 
-	var companiesHtml = _.chain(dates)
-		.map(function(v) {
-			var outages = _.find(outagesByCompany, {company: v.company});
-			v.outages = outages ? outages.outages : 0;
-			return v;
+	log(data.ticks);
+
+	var companiesHtml = _.chain(data.ticks)
+		.map(function(tickAndCompany) {
+			var outages = _.find(outagesByCompany, {company: tickAndCompany.company});
+			tickAndCompany.outages = outages ? outages.outages : 0;
+			return tickAndCompany;
 		})
 		.sortBy('company')
-		.map(function(v) {
+		.map(function(tickAndCompany) {
 
-			var date = new Date(v.date);
+			var date = new Date(tickAndCompany.ticks);
 			var displayDate = shortenedDateTime(date);
-			var label = v.outages === 1 ? 'outage' : 'outages';
+			var label = tickAndCompany.outages === 1 ? 'outage' : 'outages';
 
-			return '<li>' + v.company + ': ' + numberWithCommas(v.outages) + ' ' + label + ' as of ' + displayDate + '</li>';
+			return '<li>' + tickAndCompany.company + ': ' + numberWithCommas(tickAndCompany.outages) + ' ' + label + ' as of ' + displayDate + '</li>';
 		})
 		.value().join('');
 
