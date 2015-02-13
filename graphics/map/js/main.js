@@ -8,6 +8,19 @@ function log(s) {
 	console.log(JSON.stringify(s, null, 4));
 }
 
+function removeNStarWMECO(s) {
+	return s
+		.replace(/\(nstar\)/gi, '')
+		.replace(/\(wmeco\)/gi, '')
+		.trim();
+}
+
+function changeEversourceName(s) {
+	return s
+		.replace(/nstar/gi, 'E. Mass.')
+		.replace(/wmeco/gi, 'W. Mass.');
+}
+
 // 8:14 p.m., Feb. 9, 2015
 function shortenedDateTime(date) {
 
@@ -74,7 +87,7 @@ function getPopupContent(feature) {
 
 			var label = companyOutages > 1 ? 'outages' : 'outage';
 
-			return '<p class="outages">' + company.Company + ': ' + numberWithCommas(company['Cust. Out']) + ' ' + label + ' (' + pct + '%)</p>';
+			return '<p class="outages">' + removeNStarWMECO(company.Company) + ': ' + numberWithCommas(company['Cust. Out']) + ' ' + label + ' (' + pct + '%)</p>';
 		})
 		.value().join('');
 
@@ -228,8 +241,6 @@ window.outages = function(data) {
 		})
 		.value();
 
-	log(data.ticks);
-
 	var companiesHtml = _.chain(data.ticks)
 		.map(function(tickAndCompany) {
 			var outages = _.find(outagesByCompany, {company: tickAndCompany.company});
@@ -243,7 +254,7 @@ window.outages = function(data) {
 			var displayDate = shortenedDateTime(date);
 			var label = tickAndCompany.outages === 1 ? 'outage' : 'outages';
 
-			return '<li><span class="util-name">' + tickAndCompany.company + '</span><span class="util-outageinfo">' + numberWithCommas(tickAndCompany.outages) + ' ' + label + ' as of ' + displayDate + '</span></li>';
+			return '<li><span class="util-name">' + changeEversourceName(tickAndCompany.company) + '</span><span class="util-outageinfo">' + numberWithCommas(tickAndCompany.outages) + ' ' + label + ' as of ' + displayDate + '</span></li>';
 		})
 		.value().join('');
 

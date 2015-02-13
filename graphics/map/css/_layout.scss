@@ -5,80 +5,87 @@
 	color: rgba(102, 102, 102, 1);
 }
 
-.header {
+.header .main-hed {
 
-	.main-hed {
+	@include rhythm(0, 0, 0, 0);
 
-		@include rhythm(0, 0, 0, 0);
+	.legend {
+		display: none;
+	}
+}
 
-		.legend {
-			display: none;
-		}
+.header .subhed,
+.mobile-drawer .subhed {
+
+	letter-spacing: normal;
+
+	@include rhythm(1/3, 0, 0, 1/3);
+
+	@include breakpoint(max-width 600px) {
+		font-size: 2rem;
 	}
 
-	.subhed {
+	> p, ul {
+		@extend %updated;
+	}
 
-		@include rhythm(1/3, 0, 0, 1/3);
+	.totals {
+		background: #efefef;
+		border-bottom: 1px solid shade(#efefef,10);
+		padding: 0.25em 0;
 
-		@include breakpoint(max-width 600px) {
-			font-size: 2rem;
-		}
-
-
-		> p, ul {
-			@extend %updated;
-		}
-
-		.totals {
-			background: #efefef;
-			border-bottom: 1px solid shade(#efefef,10);
-			padding: 0.25em 0;
-
-			.totals-title {
-				font-weight: bold;
-				text-transform: uppercase;
-				color: #444;
-			}
-		}
-
-		ul {
-			@include clearfix;
-		}
-
-		li {
-			display: inline-block;
-			padding-right: 5%;
-			text-align: left;
-
-			&:last-child {
-				padding-right: 0;
-			}
-
-			@include breakpoint(max-width 800px) {
-				float: left;
-				width: 40%;
-				padding-bottom: 1em;
-
-			}
-		}
-
-		ul {
-			border-top: 1px solid shade(#efefef,10);
-			border-bottom: 1px solid shade(#efefef,10);
-			padding: 0.5em 0;
-		}
-
-		.util-name {
+		.totals-title {
 			font-weight: bold;
 			text-transform: uppercase;
 			color: #444;
-			display: block;
-		}
-
-		.util-outageinfo {
-			display: block;
 		}
 	}
+
+	ul {
+		@include clearfix;
+	}
+
+	li {
+		display: inline-block;
+		padding-right: 5%;
+		text-align: left;
+
+		&:last-child {
+			padding-right: 0;
+		}
+
+		@include breakpoint(max-width 900px) {
+			float: left;
+			width: 40%;
+			padding-bottom: 1em;
+
+		}
+	}
+
+	ul {
+		border-top: 1px solid shade(#efefef,10);
+		border-bottom: 1px solid shade(#efefef,10);
+		padding: 0.5em 0;
+	}
+
+	.util-name {
+		font-weight: bold;
+		text-transform: uppercase;
+		color: #444;
+		display: block;
+	}
+
+	.util-outageinfo {
+		display: block;
+	}
+}
+
+.mobile-drawer .subhed {
+
+	> p, ul {
+		@include adjust-font-size-to(12px, 1/2);
+	}
+
 }
 
 .igraphic-graphic.map {
@@ -96,12 +103,6 @@
 		.touch & h1 {
 			padding: 0;
 		}
-	}
-
-	.mobile-drawer .subhed p, ul li {
-		@extend %updated;
-		text-align: left;
-		@include adjust-font-size-to(14px);
 	}
 
 	.content {
